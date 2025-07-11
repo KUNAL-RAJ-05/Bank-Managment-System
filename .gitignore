@@ -1,0 +1,26 @@
+# Ignore compiled class files
+*.class
+
+# Ignore .env file (important for secrets)
+.env
+
+# Ignore logs
+*.log
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore build directories
+/build/
+/target/
+
+# IntelliJ IDEA
+*.iml
+.idea/
+
+# VS Code
+.vscode/
+
+# Maven
+.mvn/

@@ -1,13 +1,17 @@
 package database;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.io.*;
 
 public class Conn {
 
+    Map<String, String> env = loadEnvFile("D:\\DSA\\Bank Managment System\\src\\database\\.env");
     Connection c;
-    String url = "jdbc:mysql:///bankmanagementsystem";
-    String username = "root";
-    String password = "Kunal@123";
+    String url = env.get("DB_URL");
+    String username = env.get("DB_USER");
+    String password = env.get("DB_PASS");
 
     public Conn()
     {
@@ -68,5 +72,32 @@ public class Conn {
         } catch (SQLException e) {
            System.out.println(e.getMessage());
         }
+    }
+    public static Map<String, String> loadEnvFile(String filePath) {
+        Map<String, String> envVars = new HashMap<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty() || line.startsWith("#")) continue; // skip empty and comment lines
+
+                if (line.contains("=")) {
+                    String[] parts = line.split("=", 2);
+                    String key = parts[0].trim();
+                    String value = parts[1].trim();
+                    envVars.put(key, value);
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading .env file: " + e.getMessage());
+        }
+
+        return envVars;
+    }
+    public static void main(String[] args) {
+        new Conn();
     }
 }
