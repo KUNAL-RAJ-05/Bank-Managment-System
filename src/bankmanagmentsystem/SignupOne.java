@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -15,9 +17,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
+import database.Conn;
+
 public class SignupOne extends JFrame implements ActionListener{
 
-    long random;
+    Conn connection = new Conn();
+    int random = connection.getFormno();;
     JTextField nameTextField,fnameTextField,dobTextField,emailTextField,addressTextField,cityTextField,pinTextField,stateTextField;
     JButton next;
     JRadioButton male,female,other,married, unmarried;
@@ -26,10 +31,6 @@ public class SignupOne extends JFrame implements ActionListener{
     SignupOne(){
 
         setLayout(null);
-
-        Random ran = new Random();
-        random = Math.abs(ran.nextLong() % 9000L)  + 1000L;
-
 
         JLabel formno = new JLabel("APPLICATION FORM NO. " + random );
         formno.setFont(new Font("Raleway",Font.BOLD,38));
@@ -187,10 +188,21 @@ public class SignupOne extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent ae) {
 
-       String formno = ""+random;
+       int formno = random;
        String name = nameTextField.getText();
        String fname = fnameTextField.getText();
        String dob = ((JTextField)dateChooser.getDateEditor().getUiComponent()).getText();
+       Date sqlDob = null;
+
+       try{
+            //convert string to date for sending it to database
+           SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            Date utilDate = (Date) sdf.parse(dob); 
+            sqlDob = new java.sql.Date(utilDate.getTime());
+       }catch(ParseException pe){
+
+       }
+       
        String gender = null;
        if(male.isSelected()) gender = "Male";
        else if(female.isSelected()) gender =  "Female";
@@ -209,42 +221,24 @@ public class SignupOne extends JFrame implements ActionListener{
        try {
         if(name.equals("")) {
             JOptionPane.showMessageDialog(null, "Name is Required");
-        }
-
-        if(fname.equals("")) {
+        }else if(fname.equals("")) {
             JOptionPane.showMessageDialog(null, "Father name is Required");
-        }
-
-        if(dob.equals("")) {
+        }else if(dob.equals("")) {
             JOptionPane.showMessageDialog(null, "Date of Birth is Required");
-        }
-
-        if(dob.equals("")) {
+        }else if(dob.equals("")) {
             JOptionPane.showMessageDialog(null, "Date of Birth is Required");
-        }
-
-        if(email.equals("")) {
+        }else if(email.equals("")) {
             JOptionPane.showMessageDialog(null, "Email is Required");
-        }
-
-        if(address.equals("")) {
+        }else if(address.equals("")) {
             JOptionPane.showMessageDialog(null, "Email is Required");
-        }
-
-        if(city.equals("")) {
+        }else if(city.equals("")) {
             JOptionPane.showMessageDialog(null, "Email is Required");
-        }
-
-        if(state.equals("")) {
+        }else if(state.equals("")) {
             JOptionPane.showMessageDialog(null, "Email is Required");
-        }
-
-        if(pin.equals("")) {
+        }else if(pin.equals("")) {
             JOptionPane.showMessageDialog(null, "Email is Required");
-        }
-        else{
-            Conn c = new Conn();
-            String query = "insert into signup values()";
+        }else{
+           connection.insertToSignup(formno,name,fname,sqlDob,gender,email,marital,address,city,state,pin);
         }
         
        } catch (Exception e) {
