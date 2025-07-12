@@ -25,15 +25,15 @@ public class Conn {
         }
     }
     public int getFormno()
-    {  
+    {  ResultSet rs;
         try{
             
             String sql = "SELECT MAX(formno) AS max_formno FROM signup";
             PreparedStatement ps = c.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             if(rs.next())
             {
-               return rs.getInt("max_formno") +1;
+               return Math.max(rs.getInt("max_formno") +1,1000 );
             }
 
         }catch(SQLException s)
@@ -65,6 +65,7 @@ public class Conn {
             
             if(rowsaffected > 0) {
                 System.out.println("Sccuessfully inserted personal data");
+                c.commit();
             }else{
                 System.out.println("Failed to insert personal data");
             }
@@ -96,6 +97,36 @@ public class Conn {
         }
 
         return envVars;
+    }
+    public void insertToSignupTwo(int formno, String religion, String category, String income, String education, String occupation, String pan, String aadhar, String seniorCitizen, String existingAccount) {
+        try {
+            c.setAutoCommit(false);
+            String query = "INSERT INTO signuptwo (formno, religion, category, income, education, occupation, pan, aadhar, senior_citizen, existing_account) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = c.prepareStatement(query);
+
+            ps.setInt(1, formno);
+            ps.setString(2, religion);
+            ps.setString(3, category);
+            ps.setString(4, income);
+            ps.setString(5, education);
+            ps.setString(6, occupation);
+            ps.setString(7, pan);
+            ps.setString(8, aadhar);
+            ps.setString(9, seniorCitizen);
+            ps.setString(10, existingAccount);
+
+            int rowsaffected = ps.executeUpdate();
+            
+            if(rowsaffected > 0) {
+                System.out.println("Sccuessfully inserted additional data");
+                c.commit();
+            }else{
+                System.out.println("Failed to insert additional data");
+            }
+            
+        } catch (SQLException e) {
+           System.out.println(e.getMessage());
+        }
     }
     public static void main(String[] args) {
         new Conn();

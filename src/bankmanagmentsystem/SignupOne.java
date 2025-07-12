@@ -227,18 +227,24 @@ public class SignupOne extends JFrame implements ActionListener{
             JOptionPane.showMessageDialog(null, "Date of Birth is Required");
         }else if(dob.equals("")) {
             JOptionPane.showMessageDialog(null, "Date of Birth is Required");
+        }else if(gender.equals("")){
+            JOptionPane.showMessageDialog(null, "Gender is Required");
         }else if(email.equals("")) {
             JOptionPane.showMessageDialog(null, "Email is Required");
+        }else if(marital.equals("")){
+            JOptionPane.showMessageDialog(null, "Marital Status is Required");
         }else if(address.equals("")) {
-            JOptionPane.showMessageDialog(null, "Email is Required");
+            JOptionPane.showMessageDialog(null, "Address is Required");
         }else if(city.equals("")) {
-            JOptionPane.showMessageDialog(null, "Email is Required");
+            JOptionPane.showMessageDialog(null, "City is Required");
         }else if(state.equals("")) {
-            JOptionPane.showMessageDialog(null, "Email is Required");
+            JOptionPane.showMessageDialog(null, "State is Required");
         }else if(pin.equals("")) {
-            JOptionPane.showMessageDialog(null, "Email is Required");
+            JOptionPane.showMessageDialog(null, "Pincode is Required");
         }else{
            connection.insertToSignup(formno,name,fname,sqlDob,gender,email,marital,address,city,state,pin);
+           setVisible(false);
+           new SignupTwo(formno).setVisible(true);
         }
         
        } catch (Exception e) {

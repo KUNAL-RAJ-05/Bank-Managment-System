@@ -4,33 +4,36 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import database.Conn;
 public class SignupTwo extends JFrame implements ActionListener{
 
-    Conn connection = new Conn();
-    int random = connection.getFormno();
+    
     JTextField panTextField,aadhTextField;
     JButton next;
     JRadioButton syes,sno,eyes,eno;
     JComboBox<String> religiComboBox,categorComboBox,incomeComboBox,educationComboBox,occupationComboBox;
+    int formno;
 
-    SignupTwo(){
+    SignupTwo(int formno){
+        this.formno = formno; 
 
         setLayout(null);
 
         setTitle("NEW ACCOUNT APPLICATION FORM - PAGE 2");
 
 
-        JLabel additionalDetails = new JLabel("Page 2: Additional Details - Form No."+random);
+        JLabel additionalDetails = new JLabel("Page 2: Additional Details - Form No."+this.formno);
         additionalDetails.setFont(new Font("Raleway",Font.BOLD,22));
         additionalDetails.setBounds(200,80,600,30);
         add(additionalDetails);
@@ -173,11 +176,65 @@ public class SignupTwo extends JFrame implements ActionListener{
     }
     
     public static void main(String[] args) {
-        new SignupTwo();
+        new SignupTwo(0);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
       
+        String religion = (String) religiComboBox.getSelectedItem();
+        String category = (String) categorComboBox.getSelectedItem();
+        String income = (String) incomeComboBox.getSelectedItem();
+        String education = (String) educationComboBox.getSelectedItem();
+        String occupation = (String) occupationComboBox.getSelectedItem();
+        String pan = panTextField.getText();
+        String aadhar = aadhTextField.getText();
+        String seniorCitizen = syes.isSelected() ? "Yes" : "No";
+        String existingAccount = eyes.isSelected() ? "Yes" : "No";
+
+        if(religion.equals("")){
+            JOptionPane.showMessageDialog(null, "Religion is Required");
+        } 
+        else if(category.equals("")){
+            JOptionPane.showMessageDialog(null, "Category is Required");
+        } 
+        else if(income.equals("")){
+            JOptionPane.showMessageDialog(null, "Income is Required");
+        } 
+        else if(education.equals("")){
+            JOptionPane.showMessageDialog(null, "Education is Required");
+        } 
+        else if(occupation.equals("")){
+            JOptionPane.showMessageDialog(null, "Occupation is Required");
+        } 
+        else if(seniorCitizen.equals("")){
+            JOptionPane.showMessageDialog(null, "Senior Status is Required");
+        } 
+        else if(existingAccount.equals("")){
+            JOptionPane.showMessageDialog(null, "Exisiting Status is Required");
+        }
+        else if(panTextField.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "PAN Number is Required");
+        } 
+        else if(aadhTextField.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Aadhar Number is Required");
+        } 
+        else if(!Utilityclass.isValidPan(pan)){
+            JOptionPane.showMessageDialog(null, "Invalid PAN Number");
+        } 
+        else if (!Utilityclass.isValidAadhaar(aadhar)){
+            JOptionPane.showMessageDialog(null, "Invalid Aadhar Number");
+        } 
+        else {
+            Conn connection = new Conn();      
+            pan = panTextField.getText();
+            aadhar = aadhTextField.getText();
+            connection.insertToSignupTwo(formno, religion, category, income, education, occupation, pan, aadhar,seniorCitizen,existingAccount);
+            // setVisible(false);
+            // new SignupThree().setVisible(true);
+
+        }
+        
     }
+       
 }
