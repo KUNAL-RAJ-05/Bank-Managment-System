@@ -27,7 +27,7 @@ public class Conn {
     public int getFormno()
     {  
         try{
-
+            
             String sql = "SELECT MAX(formno) AS max_formno FROM signup";
             PreparedStatement ps = c.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -45,7 +45,7 @@ public class Conn {
     public void insertToSignup(int formno, String name, String fname, Date sqlDob, String gender, String email, String marital, String address, String city,String state, String pin) 
     {   
         try {
-
+            c.setAutoCommit(false);
             String query = "INSERT INTO signup (formno, name, father_name, dob, gender, email, marital_status, address, city, state, pin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = c.prepareStatement(query);
 
