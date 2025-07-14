@@ -128,6 +128,51 @@ public class Conn {
            System.out.println(e.getMessage());
         }
     }
+    public void isnertToSignupThree(String card,String pin,String acc,int form){
+        try {
+            String query = "INSERT INTO signupthree (card_number,pin_number,account_type,formno) VALUES (? , ? ,? ,? )";
+            c.setAutoCommit(false);
+            PreparedStatement ps = c.prepareStatement(query);
+
+            ps.setString(1, card);
+            ps.setString(2, pin);
+            ps.setString(3, acc);
+            ps.setInt(4, form);
+
+            int rows = ps.executeUpdate();
+            if(rows > 0) {
+                System.out.println("complete one");
+                c.commit();
+             } else System.out.println("failed");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void isnertToFacility(String card,boolean atm,boolean internet,boolean mobile,boolean email,boolean cheque,boolean estate){
+        try {
+            String query = "INSERT INTO facility (card_number,atm_card,internet_banking,mobile,email_alerts,cheque,E_statement) VALUES (? , ? ,? ,? ,? ,? ,?)";
+            c.setAutoCommit(false);
+            PreparedStatement ps = c.prepareStatement(query);
+
+            ps.setString(1, card);
+            ps.setBoolean(2, atm);
+            ps.setBoolean(3, internet);
+            ps.setBoolean(4, mobile);
+            ps.setBoolean(5, email);
+            ps.setBoolean(6, cheque);
+            ps.setBoolean(7, estate);
+
+
+            int rows = ps.executeUpdate();
+            if(rows > 0) {
+                System.out.println("complete two");
+                c.commit();
+             } else System.out.println("failed");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         new Conn();
     }

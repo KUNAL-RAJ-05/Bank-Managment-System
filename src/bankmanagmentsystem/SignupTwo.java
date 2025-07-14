@@ -229,8 +229,8 @@ public class SignupTwo extends JFrame implements ActionListener{
             pan = panTextField.getText();
             aadhar = aadhTextField.getText();
             connection.insertToSignupTwo(formno, religion, category, income, education, occupation, pan, aadhar,seniorCitizen,existingAccount);
-            // setVisible(false);
-            // new SignupThree().setVisible(true);
+            setVisible(false);
+            new SignupThree(formno).setVisible(true);
 
         }
         
