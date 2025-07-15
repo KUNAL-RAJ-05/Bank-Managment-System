@@ -10,12 +10,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
-public class Transactions extends JFrame implements ActionListener{
+import database.Conn;
+
+public class Fastcash extends JFrame implements ActionListener{
 
     String pinnumber,cardnumber;
     JButton deposit,withdrwal,fastcash,ministatement,pinchange,balancecheck,exit;
-    Transactions(String pin,String card) {
+    Fastcash(String pin,String card) {
 
         pinnumber = pin;
         cardnumber = card;
@@ -29,38 +32,38 @@ public class Transactions extends JFrame implements ActionListener{
         image.setBounds(0,0,900,900);
         add(image);
 
-        JLabel textJLabel = new JLabel("Please select your Transaction");
+        JLabel textJLabel = new JLabel("Select the Amount to withdraw");
         textJLabel.setBounds(215,300,700,35);
         textJLabel.setFont(new Font("Sysrem",Font.BOLD,16));
         textJLabel.setForeground(Color.WHITE);
         image.add(textJLabel);
 
-        deposit = new JButton("Deposit");
+        deposit = new JButton("Rs 100");
         deposit.setBounds(170,415,150,30);
         deposit.addActionListener(this);
         image.add(deposit);
 
-        withdrwal = new JButton("Cash Withdraw");
+        withdrwal = new JButton("Rs 500");
         withdrwal.setBounds(355,415,150,30);
         withdrwal.addActionListener(this);
         image.add(withdrwal);
 
-        fastcash = new JButton("Fast Cash");
+        fastcash = new JButton("Rs 1000");
         fastcash.setBounds(170,450,150,30);
         fastcash.addActionListener(this);
         image.add(fastcash);
 
-        ministatement = new JButton("Mini Statement");
+        ministatement = new JButton("Rs 2500");
         ministatement.setBounds(355,450,150,30);
         ministatement.addActionListener(this);
         image.add(ministatement);
 
-        pinchange = new JButton("Pin Change");
+        pinchange = new JButton("Rs 5000");
         pinchange.setBounds(170,485,150,30);
         pinchange.addActionListener(this);
         image.add(pinchange);
 
-        balancecheck = new JButton("Check Balance");
+        balancecheck = new JButton("Rs 10000");
         balancecheck.setBounds(355,485,150,30);
         balancecheck.addActionListener(this);
         image.add(balancecheck);
@@ -79,30 +82,42 @@ public class Transactions extends JFrame implements ActionListener{
 
     }
     public static void main(String[] args) {
-        new Transactions("","");
+        new Fastcash("","");
     }
     @Override
     public void actionPerformed(ActionEvent ae) {
        
         if(ae.getSource() == exit){
-            System.exit(0);
-        }
-        if(ae.getSource() == deposit){
             setVisible(false);
-
-            new Deposit(pinnumber, cardnumber).setVisible(true);
+            new Transactions(pinnumber, cardnumber);
         }
-        if(ae.getSource() == withdrwal)
-        {
-            setVisible(false);
+        else{
+            int amount = Integer.parseInt(((JButton)ae.getSource()).getText().substring(3));
 
-            new Withdraw(pinnumber, cardnumber).setVisible(true);
+            Conn connection  = new Conn();
+            int balance = connection.getBalance(cardnumber);
+
+            if(balance >= amount){
+                connection.transact(cardnumber, pinnumber, amount, "withdraw");
+                connection.updateBalance(cardnumber, amount, "withdraw");
+
+                JOptionPane.showMessageDialog(null, "Debited Amount : Rs"+amount);
+
+                setVisible(false);
+                new Transactions(pinnumber, cardnumber);   
+            }else{
+
+                JOptionPane.showMessageDialog(null, "Insufficent Amount: "+balance);
+
+                setVisible(false);
+                new Transactions(pinnumber, cardnumber);
+            }
+
+
+            
+
         }
-        if(ae.getSource() ==  fastcash){
-
-            setVisible(false);
-
-            new Fastcash(pinnumber, cardnumber);
-        }
+        
     }
 }
+

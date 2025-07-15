@@ -71,8 +71,10 @@ public class Deposit extends JFrame implements ActionListener {
        if(e.getSource() == deposit){
         String type = "deposit";
         int number = Integer.parseInt(amount.getText());
+        
         Conn connection = new Conn();
-        connection.deposit(cardnumber,pinnumber,number,type);
+        connection.transact(cardnumber,pinnumber,number,type);
+        connection.updateBalance(cardnumber, number, type);
 
         JOptionPane.showMessageDialog(null,"Sccussfully Deposited: Rs"+ number );
         setVisible(false);

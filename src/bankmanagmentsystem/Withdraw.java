@@ -73,11 +73,24 @@ public class Withdraw extends JFrame implements ActionListener {
         String type = "withdraw";
         int number = Integer.parseInt(amount.getText());
         Conn connection = new Conn();
-        connection.withDraw(cardnumber,pinnumber,number,type);
+        int balance = connection.getBalance(cardnumber);
+        if(balance >= number){
 
-        JOptionPane.showMessageDialog(null,"Sccussfully Withdraw: Rs"+ number );
-        setVisible(false);
-        new Transactions(pinnumber , cardnumber).setVisible(true);
+            connection.transact(cardnumber,pinnumber,number,type);
+            connection.updateBalance(cardnumber, number, type);
+
+            JOptionPane.showMessageDialog(null,"Sccussfully Withdraw: Rs"+ number );
+            setVisible(false);
+            new Transactions(pinnumber , cardnumber).setVisible(true);
+
+        }else{
+
+            JOptionPane.showMessageDialog(null,"Insufficent Balance" + balance);
+            setVisible(false);
+            new Transactions(pinnumber , cardnumber).setVisible(true);
+
+        }
+        
 
        }else if(e.getSource() == back){
         

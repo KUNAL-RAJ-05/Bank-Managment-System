@@ -195,7 +195,7 @@ public class Conn {
         return false;
 
     }
-    public void deposit(String cardnumber, String pinnumber, int number, String type) {
+    public void transact(String cardnumber, String pinnumber, int number, String type) {
        try {
         c.setAutoCommit(false);
         String query = "Insert into Transaction(card_number,pin_number,amount,type) VALUES (?,?,?,?)";
@@ -218,27 +218,72 @@ public class Conn {
 
        }
     }
-    public void withDraw(String cardnumber, String pinnumber, int number, String type) {
-         try {
-        c.setAutoCommit(false);
-        String query = "Insert into Transaction(card_number,pin_number,amount,type) VALUES (?,?,?,?)";
-        PreparedStatement ps = c.prepareStatement(query);
+    public void updateBalance(String card_number,int amount,String type){
+        try{
+            c.setAutoCommit(false);
+            String dep = "UPDATE balance SET bal = bal + ? WHERE card_number = ?";
+            String with = "UPDATE balance SET bal = bal - ? WHERE card_number = ?";
+            PreparedStatement ps;
 
-        ps.setString(1, cardnumber);
-        ps.setString(2, pinnumber);
-        ps.setInt(3, number);
-        ps.setString(4, type);
+            if(type.equals("deposit")){
+                ps = c.prepareStatement(dep);
+            }else {
+                ps = c.prepareStatement(with);
+            }
 
-        int rows = ps.executeUpdate();
-            if(rows > 0) {
-                System.out.println("Sccussfull Transaction");
+            ps.setInt(1, amount);
+            ps.setString(2, card_number);
+
+            int rows = ps.executeUpdate();
+
+            if(rows > 0){
+                System.out.println("Sccessfull Updated Balance");
                 c.commit();
-             } else System.out.println("failed");
-
-       } catch (SQLException e) {
-
-        System.out.println(e.getMessage());
-
-       }
+            }else System.out.println("Failed");
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
     }
+    public int getBalance(String card_number){
+        int bal = 0;
+        try{
+            
+            c.setAutoCommit(false);
+            String query = "SELECT bal AS amount FROM balance WHERE card_number = ?";
+            PreparedStatement ps = c.prepareStatement(query);
+
+            ps.setString(1, card_number);
+
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()){
+                bal = rs.getInt("amount");
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return bal;
+    }
+    public void insertAccount(String cardNumber) {
+        try {
+
+            c.setAutoCommit(false);
+            String query= "INSERT INTO balance (card_number) VALUES (?)";
+            PreparedStatement ps = c.prepareStatement(query);
+
+            ps.setString(1, cardNumber);
+            
+
+            int rows = ps.executeUpdate();
+
+            if(rows > 0){
+                System.out.println("Sccessfull Added Acount to Database");
+                c.commit();
+            }else System.out.println("Failed to add to database");
+
+        } catch (SQLException e) {
+           System.out.println(e.getMessage());
+        }
+    }
+    
 }

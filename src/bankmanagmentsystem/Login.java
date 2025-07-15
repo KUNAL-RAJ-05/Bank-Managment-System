@@ -96,7 +96,7 @@ public class Login extends JFrame implements ActionListener{
 
             Conn connection = new Conn();
             String cardnumber = cardTextField.getText();
-            String pin = pinTextField.getText();
+            String pin = new String(pinTextField.getPassword());
             boolean found = connection.checkDetails(cardnumber,pin);
             if(found) {
                 setVisible(false);
