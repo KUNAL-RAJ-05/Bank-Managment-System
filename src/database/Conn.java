@@ -176,4 +176,23 @@ public class Conn {
     public static void main(String[] args) {
         new Conn();
     }
+    public boolean checkDetails(String cardnumber, String pin) {
+        try {
+            
+            String query = "Select card_number as card,pin_number as pins from signupthree where card_number = ? and pin_number = ?";
+            PreparedStatement ps = c.prepareStatement(query);
+    
+            ps.setString(1, cardnumber);
+            ps.setString(2, pin);
+
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+               return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
 }

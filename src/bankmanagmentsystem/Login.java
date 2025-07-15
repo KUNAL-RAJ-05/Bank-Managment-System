@@ -10,8 +10,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import database.Conn;
 
 public class Login extends JFrame implements ActionListener{
 
@@ -91,6 +94,16 @@ public class Login extends JFrame implements ActionListener{
             pinTextField.setText("");
         }else if(ae.getSource() == login){
 
+            Conn connection = new Conn();
+            String cardnumber = cardTextField.getText();
+            String pin = pinTextField.getText();
+            boolean found = connection.checkDetails(cardnumber,pin);
+            if(found) {
+                setVisible(false);
+                new Transactions(pin).setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(null, "Invalid Card number or Pin");
+            }
         }else if(ae.getSource() == signup){
             setVisible(false);
             new SignupOne().setVisible(true);

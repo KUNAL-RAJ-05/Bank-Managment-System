@@ -211,6 +211,8 @@ public class SignupThree extends JFrame implements ActionListener {
 
                 connection.isnertToSignupThree(cardNumber, pinNumber, accounType, formno);
                 connection.isnertToFacility(cardNumber, atm, internet_banking, moblie_banking, email_alerts, cheque_book, E_statement);
+
+                JOptionPane.showMessageDialog(null, "Card Number: "+ cardNumber + "\n" + "PIN: "+pinNumber);
         }
 
       }else if (e.getSource() == cancel){
