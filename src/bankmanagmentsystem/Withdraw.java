@@ -15,13 +15,13 @@ import javax.swing.JTextField;
 
 import database.Conn;
 
-public class Deposit extends JFrame implements ActionListener {
+public class Withdraw extends JFrame implements ActionListener {
     
     String pinnumber,cardnumber;
-    JButton deposit,back;
+    JButton withdraw,back;
     JTextField amount;
 
-    Deposit(String pin,String card){
+    Withdraw(String pin,String card){
     
         pinnumber = pin;
         cardnumber = card;
@@ -35,7 +35,7 @@ public class Deposit extends JFrame implements ActionListener {
         image.setBounds(0,0,900,900);
         add(image);
 
-        JLabel text = new JLabel("Enter the amount you want to Deposit");
+        JLabel text = new JLabel("Enter the amount you want to Withdraw");
         text.setForeground(Color.WHITE);
         text.setFont(new Font("System",Font.BOLD,16));
         text.setBounds(170,300,400,20);
@@ -46,10 +46,10 @@ public class Deposit extends JFrame implements ActionListener {
         amount.setBounds(170,350,320,25);
         image.add(amount);
 
-        deposit = new JButton("Deposit");
-        deposit.setBounds(355,485,150,30);
-        deposit.addActionListener(this);
-        image.add(deposit);
+        withdraw = new JButton("Withdraw");
+        withdraw.setBounds(355,485,150,30);
+        withdraw.addActionListener(this);
+        image.add(withdraw);
 
         back = new JButton("Back");
         back.setBounds(355,520,150,30);
@@ -62,19 +62,20 @@ public class Deposit extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-            new Deposit("","");
+            new Withdraw("","");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-       if(e.getSource() == deposit){
-        String type = "deposit";
+       if(e.getSource() == withdraw){
+        
+        String type = "withdraw";
         int number = Integer.parseInt(amount.getText());
         Conn connection = new Conn();
-        connection.deposit(cardnumber,pinnumber,number,type);
+        connection.withDraw(cardnumber,pinnumber,number,type);
 
-        JOptionPane.showMessageDialog(null,"Sccussfully Deposited: Rs"+ number );
+        JOptionPane.showMessageDialog(null,"Sccussfully Withdraw: Rs"+ number );
         setVisible(false);
         new Transactions(pinnumber , cardnumber).setVisible(true);
 
@@ -85,3 +86,4 @@ public class Deposit extends JFrame implements ActionListener {
        }
     }
 }
+

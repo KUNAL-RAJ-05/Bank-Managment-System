@@ -12,12 +12,8 @@
 Thumbs.db
 
 # Ignore build directories
-/build/
+/bin/
 /target/
-
-# IntelliJ IDEA
-*.iml
-.idea/
 
 # VS Code
 .vscode/

@@ -195,4 +195,50 @@ public class Conn {
         return false;
 
     }
+    public void deposit(String cardnumber, String pinnumber, int number, String type) {
+       try {
+        c.setAutoCommit(false);
+        String query = "Insert into Transaction(card_number,pin_number,amount,type) VALUES (?,?,?,?)";
+        PreparedStatement ps = c.prepareStatement(query);
+
+        ps.setString(1, cardnumber);
+        ps.setString(2, pinnumber);
+        ps.setInt(3, number);
+        ps.setString(4, type);
+
+        int rows = ps.executeUpdate();
+            if(rows > 0) {
+                System.out.println("Sccussfull Transaction");
+                c.commit();
+             } else System.out.println("failed");
+
+       } catch (SQLException e) {
+
+        System.out.println(e.getMessage());
+
+       }
+    }
+    public void withDraw(String cardnumber, String pinnumber, int number, String type) {
+         try {
+        c.setAutoCommit(false);
+        String query = "Insert into Transaction(card_number,pin_number,amount,type) VALUES (?,?,?,?)";
+        PreparedStatement ps = c.prepareStatement(query);
+
+        ps.setString(1, cardnumber);
+        ps.setString(2, pinnumber);
+        ps.setInt(3, number);
+        ps.setString(4, type);
+
+        int rows = ps.executeUpdate();
+            if(rows > 0) {
+                System.out.println("Sccussfull Transaction");
+                c.commit();
+             } else System.out.println("failed");
+
+       } catch (SQLException e) {
+
+        System.out.println(e.getMessage());
+
+       }
+    }
 }
