@@ -100,7 +100,7 @@ public class Login extends JFrame implements ActionListener{
             boolean found = connection.checkDetails(cardnumber,pin);
             if(found) {
                 setVisible(false);
-                new Transactions(pin).setVisible(true);
+                new Transactions(pin,cardnumber).setVisible(true);
             }else{
                 JOptionPane.showMessageDialog(null, "Invalid Card number or Pin");
             }

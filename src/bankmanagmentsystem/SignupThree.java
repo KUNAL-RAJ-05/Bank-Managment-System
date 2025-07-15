@@ -213,10 +213,14 @@ public class SignupThree extends JFrame implements ActionListener {
                 connection.isnertToFacility(cardNumber, atm, internet_banking, moblie_banking, email_alerts, cheque_book, E_statement);
 
                 JOptionPane.showMessageDialog(null, "Card Number: "+ cardNumber + "\n" + "PIN: "+pinNumber);
+
+                setVisible(false);
+                new Deposit(pinNumber, cardNumber).setVisible(true);
         }
 
       }else if (e.getSource() == cancel){
-
+        setVisible(false);
+        new Login().setVisible(true);
       }
     }
 

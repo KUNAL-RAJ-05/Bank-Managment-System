@@ -13,11 +13,12 @@ import javax.swing.JLabel;
 
 public class Transactions extends JFrame implements ActionListener{
 
-    String pinnumber;
+    String pinnumber,cardnumber;
     JButton deposit,withdrwal,fastcash,ministatement,pinchange,balancecheck,exit;
-    Transactions(String pin) {
+    Transactions(String pin,String card) {
 
         pinnumber = pin;
+        cardnumber = card;
 
         setLayout(null);
         
@@ -78,13 +79,17 @@ public class Transactions extends JFrame implements ActionListener{
 
     }
     public static void main(String[] args) {
-        new Transactions("");
+        new Transactions("","");
     }
     @Override
     public void actionPerformed(ActionEvent ae) {
        
         if(ae.getSource() == exit){
             System.exit(0);
+        }if(ae.getSource() == deposit){
+            setVisible(false);
+
+            new Deposit(pinnumber, cardnumber).setVisible(true);
         }
     }
 }
