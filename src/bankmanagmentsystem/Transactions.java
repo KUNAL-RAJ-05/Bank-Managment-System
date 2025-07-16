@@ -116,5 +116,9 @@ public class Transactions extends JFrame implements ActionListener{
 
             new CheckBalance(pinnumber, cardnumber);
         }
+        if(ae.getSource() == ministatement){
+
+            new MiniStatement(pinnumber, cardnumber).setVisible(true);
+        }
     }
 }

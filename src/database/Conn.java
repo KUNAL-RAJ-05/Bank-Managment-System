@@ -316,5 +316,24 @@ public class Conn {
             System.out.println(e.getMessage());
         }
     }
+
+    public ResultSet getTransaction(String cardnumbr,String pinnumber){
+        ResultSet rs=null;
+        try {
+            String query = "SELECT * FROM Transaction WHERE card_number = ? AND pin_number = ?";
+            PreparedStatement ps = c.prepareStatement(query);
+
+            ps.setString(1, cardnumbr);
+            ps.setString(2, pinnumber);
+
+            rs = ps.executeQuery();
+
+            return rs;
+
+        } catch (SQLException e) {
+           System.out.println(e.getMessage());
+        }
+        return null;
+    }
     
 }
