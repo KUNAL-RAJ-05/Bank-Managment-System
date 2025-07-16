@@ -285,5 +285,36 @@ public class Conn {
            System.out.println(e.getMessage());
         }
     }
+    public void updatePin(String cardnumber,String newpin){
+        try {
+            c.setAutoCommit(false);
+            
+            String q1 = "UPDATE signupthree SET pin_number = ? where card_number = ?";
+            String q2 = "UPDATE Transaction SET pin_number = ? WHERE card_number = ?";
+
+            PreparedStatement ps1 = c.prepareStatement(q1);
+            PreparedStatement ps2 = c.prepareStatement(q2);
+
+            ps1.setString(1, newpin);
+            ps1.setString(2, cardnumber);
+
+            ps2.setString(1, newpin);
+            ps2.setString(2, cardnumber);
+
+            int r1 = ps1.executeUpdate();
+            int r2 = ps2.executeUpdate();
+
+            if(r1 > 0 && r2 > 0){
+                System.out.println("Sccessfully updates PIN");
+                c.commit();
+            }else{
+                System.out.println("Failed to update pin");
+            }
+            
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
     
 }

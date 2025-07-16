@@ -198,11 +198,11 @@ public class SignupThree extends JFrame implements ActionListener {
         String pinNumber = "" + Math.abs((random.nextLong() % 9000L) + 1000L);
 
         boolean atm = c1.isSelected()? true : false;
-        boolean internet_banking = c1.isSelected();
-        boolean moblie_banking = c1.isSelected();
-        boolean email_alerts = c1.isSelected();
-        boolean cheque_book = c1.isSelected(); 
-        boolean E_statement = c1.isSelected(); 
+        boolean internet_banking = c2.isSelected();
+        boolean moblie_banking = c3.isSelected();
+        boolean email_alerts = c4.isSelected();
+        boolean cheque_book = c5.isSelected(); 
+        boolean E_statement = c6.isSelected(); 
 
         if(accounType  == null){
             JOptionPane.showMessageDialog(null, "Acount Type Requied");
