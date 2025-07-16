@@ -110,5 +110,11 @@ public class Transactions extends JFrame implements ActionListener{
 
             new PinChange(pinnumber, cardnumber).setVisible(true);
         }
+        if(ae.getSource() == balancecheck){
+
+            setVisible(false);
+
+            new CheckBalance(pinnumber, cardnumber);
+        }
     }
 }
