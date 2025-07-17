@@ -1,4 +1,4 @@
-# Bank Management System (ATM Simulator)
+# Bank Management System 
 
 This project is a Java-based Bank Management System, also referred to as an ATM Simulator System. It provides a hands-on, project-based approach to understanding core banking functionalities and their implementation using Java and MySQL.
 
@@ -45,9 +45,9 @@ Follow these steps to set up and run the project on your local machine.
     ```
 
 2.  **Create Tables:**
-    You will need to create the necessary tables for the `bankdb` database. Based on the project structure, at least `signup` and `signuptwo` tables are required. You might also need tables for `login` credentials, `bank` transactions, etc.
+    You will need to create the necessary tables for the `bankmanagementsystem` database. Based on the project structure, at least `signup` and `signuptwo` tables are required. You might also need tables for `login` credentials, transactions, etc.
 
-    Example `signup` table (assuming `formno` is a primary key that `signuptwo` references):
+    Example `signup` table :
 
     ```sql
     CREATE TABLE signup (
@@ -65,7 +65,7 @@ Follow these steps to set up and run the project on your local machine.
     );
     ```
 
-    Example `signuptwo` table (as discussed previously):
+    Example `signuptwo` table :
 
     ```sql
     CREATE TABLE signuptwo (
@@ -136,6 +136,8 @@ Follow these steps to set up and run the project on your local machine.
 
 1.  **Clone the Repository:**
     If this project is in a Git repository, clone it to your local machine.
+
+    `git clone https://github.com/KUNAL-RAJ-05/Bank-Managment-System`
 
 2.  **Open in IDE:**
     Open the `Bank Management System` project folder in your preferred Java IDE.
