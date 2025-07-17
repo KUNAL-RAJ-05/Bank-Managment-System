@@ -65,4 +65,9 @@ public class Utilityclass {
         return pan != null && pan.matches(panRegex);
     }
 
+    public static boolean isValidPinCode(String pin){
+        String pinRegx = "^[0-9]{6}$";
+        return pin != null && pin.matches(pinRegx);
+    }
+
 }

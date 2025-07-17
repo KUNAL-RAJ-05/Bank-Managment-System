@@ -98,7 +98,7 @@ public class Conn {
 
         return envVars;
     }
-    public void insertToSignupTwo(int formno, String religion, String category, String income, String education, String occupation, String pan, String aadhar, String seniorCitizen, String existingAccount) {
+    public int insertToSignupTwo(int formno, String religion, String category, String income, String education, String occupation, String pan, String aadhar, String seniorCitizen, String existingAccount) {
         try {
             c.setAutoCommit(false);
             String query = "INSERT INTO signuptwo (formno, religion, category, income, education, occupation, pan, aadhar, senior_citizen, existing_account) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -120,6 +120,7 @@ public class Conn {
             if(rowsaffected > 0) {
                 System.out.println("Sccuessfully inserted additional data");
                 c.commit();
+                return 1;
             }else{
                 System.out.println("Failed to insert additional data");
             }
@@ -127,6 +128,7 @@ public class Conn {
         } catch (SQLException e) {
            System.out.println(e.getMessage());
         }
+        return -1;
     }
     public void isnertToSignupThree(String card,String pin,String acc,int form){
         try {
@@ -320,7 +322,7 @@ public class Conn {
     public ResultSet getTransaction(String cardnumbr,String pinnumber){
         ResultSet rs=null;
         try {
-            String query = "SELECT * FROM Transaction WHERE card_number = ? AND pin_number = ?";
+            String query = "SELECT * FROM Transaction WHERE card_number = ? AND pin_number = ? ORDER BY date DESC";
             PreparedStatement ps = c.prepareStatement(query);
 
             ps.setString(1, cardnumbr);

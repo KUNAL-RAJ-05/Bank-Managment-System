@@ -241,6 +241,10 @@ public class SignupOne extends JFrame implements ActionListener{
             JOptionPane.showMessageDialog(null, "State is Required");
         }else if(pin.equals("")) {
             JOptionPane.showMessageDialog(null, "Pincode is Required");
+        }else if(!Utilityclass.isValidEmail(email)){
+            JOptionPane.showMessageDialog(null, "Invalid Email");
+        }else if(!Utilityclass.isValidPinCode(pin)){
+            JOptionPane.showMessageDialog(null, "Invalid PinCode");
         }else{
            connection.insertToSignup(formno,name,fname,sqlDob,gender,email,marital,address,city,state,pin);
            setVisible(false);

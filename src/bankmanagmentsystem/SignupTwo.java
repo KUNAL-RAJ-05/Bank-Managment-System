@@ -228,9 +228,14 @@ public class SignupTwo extends JFrame implements ActionListener{
             Conn connection = new Conn();      
             pan = panTextField.getText();
             aadhar = aadhTextField.getText();
-            connection.insertToSignupTwo(formno, religion, category, income, education, occupation, pan, aadhar,seniorCitizen,existingAccount);
-            setVisible(false);
-            new SignupThree(formno).setVisible(true);
+            int sccessfull = connection.insertToSignupTwo(formno, religion, category, income, education, occupation, pan, aadhar,seniorCitizen,existingAccount);
+            
+            if(sccessfull == 1){
+                setVisible(false);
+                new SignupThree(formno).setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(null, "Invalid Aadhar Number");
+            }
 
         }
         
